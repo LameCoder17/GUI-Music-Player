@@ -2,7 +2,6 @@ import pygame
 import tkinter
 from tkinter.filedialog import askdirectory
 import os
-import time
 import re
 
 def play():
@@ -40,16 +39,19 @@ def masterButton():
             buttonText.set("Pause")
 
 def lowerVolume():
+    ''' Decreases volume '''
     newVolume = pygame.mixer.music.get_volume() - 0.1
     pygame.mixer.music.set_volume(newVolume)
     volume.set(str(int(newVolume*100)) + " %")
 
 def raiseVolume():
+    ''' Increases volume '''
     newVolume = pygame.mixer.music.get_volume() + 0.1
     pygame.mixer.music.set_volume(newVolume)
     volume.set(str(int(newVolume*100)) + " %")
 
 def setDirectory():
+    ''' Sets the directory according to user '''
     global songList, playList
     directory = askdirectory() # Asks directory from user
     os.chdir(directory)  # Sets the directory to the directory user chooses
@@ -68,6 +70,7 @@ def setDirectory():
         playList.insert(pos, "No MP3 songs found")
 
 def packEverything():
+    ''' One function for packing everything '''
     songTitle.pack()
     playList.pack(fill = "both", expand = "yes")
     playButton.pack(side = tkinter.TOP)
@@ -81,9 +84,10 @@ def packEverything():
 musicPlayer = tkinter.Tk()  # Creating a tkinter window
 musicPlayer.title('Music Player')  # Setting title
 musicPlayer.geometry('800x600')  # Setting the size of the window
+musicPlayer.configure(background='#207398')  # Setting colour of window
 
 songList = os.listdir()  # Creating song list
-playList = tkinter.Listbox(musicPlayer, font = "times 14", bg = "#5DA3FA", selectmode = tkinter.SINGLE)  # Creating playlist
+playList = tkinter.Listbox(musicPlayer, font = "times 14", bg = "#207398", selectmode = tkinter.SINGLE)  # Creating playlist
 
 # Adding songs from songList to playList
 pos = 0
@@ -105,17 +109,17 @@ buttonText = tkinter.StringVar()
 buttonText.set("Play")
 
 # Creating buttons
-playButton = tkinter.Button(musicPlayer, height = 3, width = 15, textvariable = buttonText, command = masterButton)
-decreaseVolume = tkinter.Button(musicPlayer, height = 3, width = 15, text = "Decrease Volume", command = lowerVolume)
-increaseVolume = tkinter.Button(musicPlayer, height = 3, width = 15, text = "Increase Volume", command = raiseVolume)
-changeDirectory = tkinter.Button(musicPlayer, height = 3, width = 15, text = "Change Directory", command = setDirectory)
+playButton = tkinter.Button(musicPlayer, height = 2, width = 10, textvariable = buttonText, command = masterButton, bg = "#242B2E", fg = "#23C4ED")
+decreaseVolume = tkinter.Button(musicPlayer, height = 2, width = 15, text = "Decrease Volume", command = lowerVolume, bg = "#242B2E", fg ="#23C4ED")
+increaseVolume = tkinter.Button(musicPlayer, height = 2, width = 15, text = "Increase Volume", command = raiseVolume, bg = "#242B2E", fg = "#23C4ED")
+changeDirectory = tkinter.Button(musicPlayer, height = 2, width = 15, text = "Change Directory", command = setDirectory, bg = "#242B2E", fg = "#23C4ED")
 
 var = tkinter.StringVar()
-songTitle = tkinter.Label(musicPlayer, font = "times 16", textvariable = var)
+songTitle = tkinter.Label(musicPlayer, font = "times 16", textvariable = var, fg = "#F4CE6A", bg = "#207398")
 
 volume = tkinter.StringVar()
 volume.set(str(int(pygame.mixer.music.get_volume()*100)) + " %")
-volumeLabel = tkinter.Label(musicPlayer, font = "times 12", textvariable = volume)
+volumeLabel = tkinter.Label(musicPlayer, font = "times 12", textvariable = volume, bg = "#207398")
 
 packEverything()
 
